@@ -1,4 +1,6 @@
 import db from "../models/index";
+import userService from "../services/userService";
+
 const getUsers = async (req, res) => {
   try {
     let data = await db.User.findAll();
@@ -6,7 +8,30 @@ const getUsers = async (req, res) => {
     return res.send(data);
   } catch (error) {
     console.log("🚀 ~ file: userController.js:8 ~ getUsers ~ error:", error);
+    return res.send(error.message);
   }
 };
 
-module.exports = { getUsers };
+const createNewUser = async (req, res) => {
+  try {
+    console.log(
+      "🚀 ~ file: userController.js:16 ~ createNewUser ~ req:",
+      req.body
+    );
+
+    let message = await userService.createNewUser(req.body);
+    console.log(
+      "🚀 ~ file: userController.js:17 ~ createNewUser ~ message:",
+      message
+    );
+    return res.send(message);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: userController.js:16 ~ createNewUser ~ error:",
+      error
+    );
+    return res.send("Failed! " + error?.message);
+  }
+};
+
+module.exports = { getUsers, createNewUser };
