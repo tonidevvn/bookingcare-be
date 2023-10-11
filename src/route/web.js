@@ -25,8 +25,16 @@ let initWebRoutes = (app) => {
     });
   });
 
+  // C - USER
   router.post("/user", userController.createNewUser);
-  router.get("/users", userController.getUsers);
+  // R - USER
+  router.get("/user/:id", userController.getUser);
+  // U - USER
+  router.put("/user/:id", userController.updateUser);
+  // D - USER
+  router.delete("/user/:id", userController.deleteUser);
+
+  router.get("/users", userController.getAllUsers);
 
   return app.use("/", router);
 };
